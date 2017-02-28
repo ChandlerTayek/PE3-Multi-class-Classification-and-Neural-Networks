@@ -37,9 +37,25 @@ grad = zeros(size(theta));
 %
 
 
+fprintf('The size of theta is : %dx%d\n', size(theta));
+fprintf('The size of X is : %dx%d\n', size(X));
+fprintf('The size of y is : %dx%d\n', size(y));
+fprintf('The size of lambda is : %dx%d\n', size(lambda));
+z = theta'*X';
+fprintf('The size of z is : %dx%d\n', size(z));
+h_theta = sigmoid(z);
+disp(theta);
+disp(theta(2:end)');
+disp(theta(2:end));
+J = (1/m)*(log(h_theta)*-y - log(1 - h_theta)*(1 - y)) + lambda/(2*m)* (theta(2:end))'* theta(2:end);
 
+% Computing the grad
+grad = X'*(1/m)*(h_theta' - y);
 
-
+% We ignore the bias factor theta_0
+temp = theta;
+temp(1) = 0;
+grad = grad + (lambda/m)*temp;
 
 
 
