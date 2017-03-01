@@ -7,7 +7,8 @@ function [all_theta] = oneVsAll(X, y, num_labels, lambda)
 %   in a matrix all_theta, where the i-th row of all_theta corresponds 
 %   to the classifier for label i
 
-% Some useful variables
+% Some useful variables where m is the training examples and n is the
+% features
 m = size(X, 1);
 n = size(X, 2);
 
@@ -20,7 +21,7 @@ X = [ones(m, 1) X];
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the following code to train num_labels
 %               logistic regression classifiers with regularization
-%               parameter lambda. 
+%               para . 
 %
 % Hint: theta(:) will return a column vector.
 %
@@ -49,8 +50,18 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
+initial_theta = zeros(n+1, 1);
+options = optimset('GradObj', 'on', 'MaxIter', 50);
 
 
+for c = 1:num_labels;
+    
+    
+
+    [all_theta(c,:)] = ...
+        fmincg(@(t)(lrCostFunction(t, X, (y==c), lambda)), ...
+            initial_theta, options);
+end;
 
 
 
